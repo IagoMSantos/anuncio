@@ -11,12 +11,16 @@
             padding: 0;
             background-color: #f0f0f0; /* Cor de fundo geral da página */
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que o corpo ocupe toda a altura da tela */
         }
 
         .container {
-            max-width: 900px; /* Largura do contêiner */
-            min-height: 600px; /* Altura mínima do contêiner */
-            margin: 20px auto;
+            width: 100%; /* Largura 100% para adaptar-se ao tamanho da tela */
+            max-width: 800px; /* Largura máxima do contêiner */
+            height: auto; /* Altura automática para manter a proporção */
             padding: 15px;
             background-image: url('fundo.jpeg'); /* Imagem de fundo específica do container */
             background-size: cover;
@@ -47,45 +51,40 @@
 
         .header h1 {
             color: #e60000;
-            font-size: 24px;
+            font-size: 20px; /* Tamanho ajustado para dispositivos móveis */
             margin-bottom: 10px;
         }
 
         .header h2 {
             color: #0056b3;
-            font-size: 14px;
+            font-size: 12px; /* Tamanho ajustado para dispositivos móveis */
             margin-top: 0;
         }
 
         .product-container {
             position: relative;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Empilha os produtos verticalmente */
             align-items: center;
             margin-bottom: 15px;
-            padding: 20px;
+            padding: 10px; /* Ajuste de padding para dispositivos móveis */
             border-radius: 8px;
         }
 
-        .product-container img {
-            position: relative;
-            z-index: 2;
-        }
-
         .product-container img.main-product {
-            width: 40%; /* Reduzido um pouco para se adaptar ao novo tamanho */
-            margin-right: 15px;
+            width: 90%; /* Largura ajustada para se adaptar ao novo tamanho */
+            margin-bottom: 10px;
             object-fit: contain;
         }
 
         .product-container img.bonus {
-            width: 15%;
-            margin: 0 5px;
+            width: 70%; /* Largura ajustada para os brindes */
+            margin: 5px 0;
             object-fit: contain;
         }
 
         .price {
-            font-size: 20px;
+            font-size: 18px; /* Tamanho ajustado para dispositivos móveis */
             color: #e60000;
             font-weight: bold;
             margin-bottom: 10px;
@@ -93,12 +92,12 @@
 
         .cta {
             background-color: #e60000;
-            padding: 10px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px; /* Tamanho ajustado para dispositivos móveis */
             font-weight: bold;
             color: #fff;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .buy-button {
@@ -106,7 +105,7 @@
             padding: 10px 20px;
             background-color: #0056b3;
             color: white;
-            font-size: 16px;
+            font-size: 14px; /* Tamanho ajustado para dispositivos móveis */
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
@@ -116,10 +115,12 @@
             background-color: #003b80;
         }
     </style>
+    <!-- Adiciona o script html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0/html2canvas.min.js"></script>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="capture">
         <div class="header">
             <h1>Promoção Máscara do Homem-Aranha + Brindes!</h1>
             <h2>Ganhe chaveiro e boneco até o Dia das Crianças!</h2>
@@ -143,5 +144,25 @@
         <a href="#" class="buy-button">Compre Já</a>
     </div>
 
+    <script>
+        // Função para capturar o contêiner e salvar a imagem
+        function captureAndSave() {
+            html2canvas(document.getElementById('capture')).then(canvas => {
+                // Cria uma URL para a imagem capturada
+                const img = canvas.toDataURL("image/jpeg");
+                
+                // Cria um link para download
+                const link = document.createElement('a');
+                link.href = img;
+                link.download = 'anuncio.jpg';
+                link.click();
+            });
+        }
+
+        // Executa a captura ao carregar a página
+        window.onload = function() {
+            captureAndSave();
+        };
+    </script>
 </body>
 </html>
